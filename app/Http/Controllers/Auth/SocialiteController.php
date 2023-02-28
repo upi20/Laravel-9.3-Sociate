@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\SocialAccount;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -20,12 +19,7 @@ class SocialiteController extends Controller
     {
         try {
 
-            $user = Socialite::driver($provider);
-            if (isset($user->stateless)) {
-                $user = $user->stateless()->user();
-            } else {
-                return redirect()->route('dashboard');
-            }
+            $user = Socialite::driver($provider)->stateless()->user();
         } catch (Exception $e) {
             return redirect()->back();
         }
